@@ -33,7 +33,7 @@ module ActiveRecord
               native = native_database_types[type]
               column_type_sql = (native || {})[:name] || 'enum'
 
-              column_type_sql << "(#{limit.map { |v| quote(v) }.join(',')})"
+              column_type_sql += "(#{limit.map { |v| quote(v) }.join(',')})"
 
               column_type_sql
             else
@@ -46,7 +46,7 @@ module ActiveRecord
               native = native_database_types[type]
               column_type_sql = (native || {})[:name] || 'enum'
 
-              column_type_sql << "(#{limit.map { |v| quote(v) }.join(',')})"
+              column_type_sql += "(#{limit.map { |v| quote(v) }.join(',')})"
 
               column_type_sql
             else
