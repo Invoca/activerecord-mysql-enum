@@ -28,27 +28,35 @@ module ActiveRecord
         #
         # will generate enum('a', 'b', 'c') for :limit => [:a, :b, :c]
         if Rails::VERSION::MAJOR < 5
-          def type_to_sql(type, limit = nil, precision = nil, scale = nil, unsigned = nil, **_options) # :nodoc:
+          def type_to_sql(type, limit = nil, precision = nil, scale = nil)
             if type.to_s == 'enum'
-              native = native_database_types[type]
-              column_type_sql = (native || {})[:name] || 'enum'
+              column_type_sql =
+                if (native_database_type = native_database_types[type])
+                  native_database_type[:name]
+                else
+                  'enum'
+                end
 
-              column_type_sql += "(#{limit.map { |v| quote(v) }.join(',')})"
+              quoted_values = limit.map { |v| quote(v) }.join(',')
 
-              column_type_sql
+              "#{column_type_sql}(#{quoted_values})"
             else
-              super(type, limit, precision, scale, unsigned)
+              super(type, limit, precision, scale)
             end
           end
         else
           def type_to_sql(type, limit: nil, precision: nil, scale: nil, unsigned: nil, **_options) # :nodoc:
             if type.to_s == 'enum'
-              native = native_database_types[type]
-              column_type_sql = (native || {})[:name] || 'enum'
+              column_type_sql =
+                if (native_database_type = native_database_types[type])
+                  native_database_type[:name]
+                else
+                  'enum'
+                end
 
-              column_type_sql += "(#{limit.map { |v| quote(v) }.join(',')})"
+              quoted_values = limit.map { |v| quote(v) }.join(',')
 
-              column_type_sql
+              "#{column_type_sql}(#{quoted_values})"
             else
               super(type, limit: limit, precision: precision, scale: scale, unsigned: unsigned)
             end

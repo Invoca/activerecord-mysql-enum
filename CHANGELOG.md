@@ -4,6 +4,10 @@ Inspired by [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2020-08-19
+### Changed
+- refactor mysql adapter 
+
 ## [0.1.2] - 2020-08-18
 ### Changed
 - fixed frozen string to reassign value instead of append
