@@ -28,7 +28,7 @@ module ActiveRecord
         #
         # will generate enum('a', 'b', 'c') for :limit => [:a, :b, :c]
         if Rails::VERSION::MAJOR < 5
-          def type_to_sql(type, limit = nil, precision = nil, scale = nil, unsigned = nil, **_options) # :nodoc:
+          def type_to_sql(type, limit = nil, precision = nil, scale = nil)
             if type.to_s == 'enum'
               column_type_sql =
                 if (native_database_type = native_database_types[type])
@@ -41,7 +41,7 @@ module ActiveRecord
 
               "#{column_type_sql}(#{quoted_values})"
             else
-              super(type, limit, precision, scale, unsigned)
+              super(type, limit, precision, scale)
             end
           end
         else
