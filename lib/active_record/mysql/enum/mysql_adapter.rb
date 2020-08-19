@@ -30,16 +30,16 @@ module ActiveRecord
         if Rails::VERSION::MAJOR < 5
           def type_to_sql(type, limit = nil, precision = nil, scale = nil, unsigned = nil, **_options) # :nodoc:
             if type.to_s == 'enum'
-              column_type =
-              if (native_database_type = native_database_types[type])
-                native_database_type[:name]
-              else
-                'enum'
-              end
+              column_type_sql =
+                if (native_database_type = native_database_types[type])
+                  native_database_type[:name]
+                else
+                  'enum'
+                end
 
               quoted_values = limit.map { |v| quote(v) }.join(',')
 
-              "#{column_type}(#{quoted_values})"
+              "#{column_type_sql}(#{quoted_values})"
             else
               super(type, limit, precision, scale, unsigned)
             end
@@ -47,16 +47,16 @@ module ActiveRecord
         else
           def type_to_sql(type, limit: nil, precision: nil, scale: nil, unsigned: nil, **_options) # :nodoc:
             if type.to_s == 'enum'
-              column_type =
-              if (native_database_type = native_database_types[type])
-                native_database_type[:name]
-              else
-                'enum'
-              end
+              column_type_sql =
+                if (native_database_type = native_database_types[type])
+                  native_database_type[:name]
+                else
+                  'enum'
+                end
 
               quoted_values = limit.map { |v| quote(v) }.join(',')
 
-              "#{column_type}(#{quoted_values})"
+              "#{column_type_sql}(#{quoted_values})"
             else
               super(type, limit: limit, precision: precision, scale: scale, unsigned: unsigned)
             end
