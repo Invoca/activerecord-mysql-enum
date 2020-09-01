@@ -4,7 +4,7 @@ class EnumController < ActionController::Base
   layout false
 
   def enum_select
-    @test = Enumeration.new
+    @test = EnumerationTestModel.new
     render :inline => "<%= enum_select('test', 'severity')%>"
   end
 

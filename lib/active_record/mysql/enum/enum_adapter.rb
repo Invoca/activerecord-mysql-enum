@@ -7,6 +7,8 @@ adapter_class = if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
   ActiveRecord::ConnectionAdapters::Mysql2Adapter
 elsif defined? ActiveRecord::ConnectionAdapters::MysqlAdapter
   ActiveRecord::ConnectionAdapters::MysqlAdapter
+else
+  raise "Unable to find mysql adapter"
 end
 
 if adapter_class
