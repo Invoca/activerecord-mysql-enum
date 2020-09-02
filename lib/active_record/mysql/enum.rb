@@ -15,10 +15,6 @@ if defined?(::Rails::Railtie)
               require 'active_record/mysql/enum/quoting'
               require 'active_record/mysql/enum/validations'
             end
-
-            ActiveSupport.on_load :action_view do
-              require 'active_record/mysql/enum/active_record_helper'
-            end
           end
         end
       end

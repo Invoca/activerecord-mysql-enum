@@ -50,17 +50,3 @@ irb(1)> Enumeration.columns_hash['color'].limit
 irb(2)> @enumeration.column_for_attribute(:color).limit
 => [:red, :blue, :green, :yellow]
 ```
-
-### Form Helpers
-You can use enum_select helper to generate input for enumerated attribute as:
-```ruby
-<%= enum_select(@enumeration, 'severity')%>
-```
-
-Or using `form_for`:
-```ruby
-<%= form_for @enumeration do |f| %>
-  <%= f.label :severity %>
-  <%= f.enum_select :severity %>
-<% end %>
-```
