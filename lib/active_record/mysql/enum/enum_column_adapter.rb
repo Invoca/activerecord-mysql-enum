@@ -19,18 +19,26 @@ end
 
 if column_class
   column_class.class_eval do
+    def __handle_enum_default
+      if type == :enum
+        if @default == '' || @default.nil?
+          @default = nil
+        else
+          @default = @default.intern
+        end
+      end
+    end
 
-    if instance_methods.include?(:extract_default)
+    if instance_methods.include?(:extract_default) # Support for Rails <= 5.0
       alias __extract_default_enum extract_default
       def extract_default
-        if type == :enum
-          if @default == '' || @default.nil?
-            @default = nil
-          else
-            @default = @default.intern
-          end
-        end
+        __handle_enum_default
         __extract_default_enum
+      end
+    else # Support for Rails 5.1+. extract_default was removed.
+      def initialize(*)
+        super
+        __handle_enum_default
       end
     end
 
