@@ -11,5 +11,6 @@ gem "rails", "~> 5.2"
 gem "rspec"
 gem "rspec-rails", "~> 3.0"
 gem "mysql2", "0.4.5"
+gem "simplecov"
 
 gemspec path: "../"
