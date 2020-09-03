@@ -1,4 +1,4 @@
-# ActiveRecord::Mysql::Enum
+# ActiveRecord::Mysql::Enum [![Coverage Status](https://coveralls.io/repos/github/Invoca/activerecord-mysql-enum/badge.svg?branch=master)](https://coveralls.io/github/Invoca/activerecord-mysql-enum?branch=master)
 
 This gem is an extension to ActiveRecord which enables native support of
 enumerations in the database schema using the ENUM type in MySQL. Forked
