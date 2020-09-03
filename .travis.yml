@@ -22,4 +22,6 @@ matrix:
       rvm: 2.4.5
   allow_failures:
     - rvm: ruby-head
-script: bundle exec rspec
+script:
+  - RAILS_ENV=test bundle exec rake db:create
+  - bundle exec rspec
