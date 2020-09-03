@@ -9,3 +9,4 @@
 /log/*.log
 /db/*.sqlite3
 .idea
+gemfiles/*.lock
