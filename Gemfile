@@ -7,6 +7,7 @@ gemspec
 
 gem 'appraisal'
 gem 'bundler',     '~> 1.8'
+gem 'coveralls', require: false
 gem 'pry'
 gem 'pry-byebug'
 gem 'rake',        '~> 13.0'
@@ -14,4 +15,3 @@ gem 'rails',       '~> 4.2'
 gem 'rspec'
 gem 'rspec-rails', '~> 3.0'
 gem 'mysql2', '0.4.5'
-gem 'simplecov'
