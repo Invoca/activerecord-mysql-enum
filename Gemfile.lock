@@ -160,7 +160,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord-mysql-enum!
   appraisal
-  bundler (~> 1.8)
   coveralls
   mysql2 (= 0.4.5)
   pry

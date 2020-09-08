@@ -6,7 +6,6 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'appraisal'
-gem 'bundler',     '~> 1.8'
 gem 'coveralls', require: false
 gem 'pry'
 gem 'pry-byebug'
