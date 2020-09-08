@@ -17,15 +17,21 @@ elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
   ActiveRecord::ConnectionAdapters::MySQL::Column
 end
 
-module HandleDefaultEnumValue
-  def initialize(*)
-    super
+module ActiveRecord
+  module Mysql
+    module Enum
+      module EnumColumnAdapter
+        def initialize(*)
+          super
 
-    if type == :enum
-      if @default == '' || @default.nil?
-        @default = nil
-      else
-        @default = @default.intern
+          if type == :enum
+            if @default == '' || @default.nil?
+              @default = nil
+            else
+              @default = @default.intern
+            end
+          end
+        end
       end
     end
   end
@@ -33,7 +39,7 @@ end
 
 if column_class
   column_class.class_eval do
-    prepend HandleDefaultEnumValue
+    prepend ActiveRecord::Mysql::Enum::EnumColumnAdapter
 
     def __enum_type_cast(value)
       if type == :enum
