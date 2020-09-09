@@ -21,26 +21,19 @@ module ActiveRecord
   end
 end
 
-# try rails 3.1, then rails 3.2+, mysql column adapters
-column_class = if defined? ActiveRecord::ConnectionAdapters::Mysql2Column
-                 ActiveRecord::ConnectionAdapters::Mysql2Column
-               elsif defined? ActiveRecord::ConnectionAdapters::MysqlColumn
-                 ActiveRecord::ConnectionAdapters::MysqlColumn
-               elsif defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
+column_class = if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
                  ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
                elsif defined? ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
                  ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
                elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
                  ActiveRecord::ConnectionAdapters::MySQL::Column
                else
-                 raise "could not find MysqlColumn or equivalent"
+                 raise "could not find MySQL::Column or equivalent connection adapter"
                end
 
 if column_class
   column_class.class_eval do
     prepend ActiveRecord::Mysql::Enum::EnumColumnAdapter
-
-    private
 
     def __enum_type_cast(value)
       if type == :enum
@@ -63,19 +56,6 @@ if column_class
       end
     end
 
-    # Deprecated in Rails 4.1
-    if instance_methods.include?(:type_cast_code)
-      alias __type_cast_code_enum type_cast_code
-      # Code to convert to a symbol.
-      def type_cast_code(var_name)
-        if type == :enum
-          "#{self.class.name}.value_to_symbol(#{var_name})"
-        else
-          __type_cast_code_enum(var_name)
-        end
-      end
-    end
-
     class << self
       # Safely convert the value to a symbol.
       def value_to_symbol(value)
@@ -89,33 +69,5 @@ if column_class
         end
       end
     end
-
-  private
-
-    # Deprecated in Rails 4.2
-    if private_instance_methods.include?(:simplified_type)
-      alias __simplified_type_enum simplified_type
-      # The enum simple type.
-      def simplified_type(field_type)
-        if field_type =~ /enum/i
-          :enum
-        else
-          __simplified_type_enum(field_type)
-        end
-      end
-    end
-
-    # Deprecated in Rails 4.2
-    if private_instance_methods.include?(:extract_limit)
-      alias __extract_limit_enum extract_limit
-      def extract_limit(sql_type)
-        if sql_type =~ /^enum/i
-          sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.intern }
-        else
-          __extract_limit_enum(sql_type)
-        end
-      end
-    end
-
   end
 end
