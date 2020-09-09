@@ -3,20 +3,6 @@
 # This module provides all the column helper methods to deal with the
 # values and adds the common type management code for the adapters.
 
-
-# try rails 3.1, then rails 3.2+, mysql column adapters
-column_class = if defined? ActiveRecord::ConnectionAdapters::Mysql2Column
-  ActiveRecord::ConnectionAdapters::Mysql2Column
-elsif defined? ActiveRecord::ConnectionAdapters::MysqlColumn
-  ActiveRecord::ConnectionAdapters::MysqlColumn
-elsif defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
-  ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
-elsif defined? ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
-  ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
-elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
-  ActiveRecord::ConnectionAdapters::MySQL::Column
-end
-
 module ActiveRecord
   module Mysql
     module Enum
@@ -25,11 +11,9 @@ module ActiveRecord
           super
 
           if type == :enum
-            if @default == '' || @default.nil?
-              @default = nil
-            else
-              @default = @default.intern
-            end
+            @default = if @default.present?
+                         @default.to_sym
+                       end
           end
         end
       end
@@ -37,9 +21,26 @@ module ActiveRecord
   end
 end
 
+# try rails 3.1, then rails 3.2+, mysql column adapters
+column_class = if defined? ActiveRecord::ConnectionAdapters::Mysql2Column
+                 ActiveRecord::ConnectionAdapters::Mysql2Column
+               elsif defined? ActiveRecord::ConnectionAdapters::MysqlColumn
+                 ActiveRecord::ConnectionAdapters::MysqlColumn
+               elsif defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
+                 ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
+               elsif defined? ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
+                 ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
+               elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
+                 ActiveRecord::ConnectionAdapters::MySQL::Column
+               else
+                 raise "could not find MysqlColumn or equivalent"
+               end
+
 if column_class
   column_class.class_eval do
     prepend ActiveRecord::Mysql::Enum::EnumColumnAdapter
+
+    private
 
     def __enum_type_cast(value)
       if type == :enum
@@ -82,7 +83,7 @@ if column_class
         when Symbol
           value
         when String
-          value.empty? ? nil : value.intern
+          value.to_sym if value.present?
         else
           nil
         end
