@@ -3,6 +3,7 @@ PATH
   specs:
     activerecord-mysql-enum (0.1.4.pre.2)
       activerecord (>= 4.2, < 7)
+      mysql2 (= 0.4.5)
 
 GEM
   remote: https://rubygems.org/
@@ -161,7 +162,6 @@ DEPENDENCIES
   activerecord-mysql-enum!
   appraisal
   coveralls
-  mysql2 (= 0.4.5)
   pry
   pry-byebug
   rails (~> 4.2)

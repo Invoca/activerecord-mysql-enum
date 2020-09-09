@@ -23,8 +23,6 @@ end
 
 column_class = if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
                  ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
-               elsif defined? ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
-                 ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
                elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
                  ActiveRecord::ConnectionAdapters::MySQL::Column
                else

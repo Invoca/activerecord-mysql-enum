@@ -6,8 +6,8 @@ adapter_class = if defined? ActiveRecord::ConnectionAdapters::MySQLJdbcConnectio
 #   ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter
 elsif defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
   ActiveRecord::ConnectionAdapters::Mysql2Adapter
-elsif defined? ActiveRecord::ConnectionAdapters::MysqlAdapter
-  ActiveRecord::ConnectionAdapters::MysqlAdapter
+else
+  raise "Could not find MySQL connection adapter"
 end
 
 module ActiveRecord
