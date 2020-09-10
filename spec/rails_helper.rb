@@ -2,8 +2,13 @@
 
 ENV["RAILS_ENV"] ||= 'test'
 
+require 'simplecov'
 require 'coveralls'
-Coveralls.wear!
+
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov.start do
+  add_filter 'spec/helpers'
+end
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'spec_helper'
