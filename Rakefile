@@ -3,6 +3,7 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+Bundler::GemHelper.install_tasks
 Rails.application.load_tasks
 
 task default: :rspec
