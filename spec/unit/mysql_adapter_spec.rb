@@ -1,6 +1,26 @@
 # frozen_string_literal: true
 
+require_relative '../helpers/test_const_overrides'
+
 describe ActiveRecord::Mysql::Enum::MysqlAdapter do
+  include ConstantOverrides::TestConstOverride
+
+  context "adapter not found" do
+    before do
+      if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
+        unset_test_const("ActiveRecord::ConnectionAdapters::Mysql2Adapter")
+      end
+    end
+
+    after do
+      cleanup_constant_overrides
+    end
+
+    it "raises" do
+      expect { ActiveRecord::Mysql::Enum.current_mysql_adapter }.to raise_error(RuntimeError, "Could not find MySQL connection adapter")
+    end
+  end
+
   let(:db_connection) { ActiveRecord::Base.connection }
 
   context "#native_database_types" do

@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 
-adapter_class = if defined? ActiveRecord::ConnectionAdapters::MySQLJdbcConnection
-  ActiveRecord::ConnectionAdapters::MySQLJdbcConnection
-# elsif defined? ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter
-#   ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter
-elsif defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
-  ActiveRecord::ConnectionAdapters::Mysql2Adapter
-else
-  raise "Could not find MySQL connection adapter"
-end
-
 module ActiveRecord
   module Mysql
     module Enum
+
+      class << self
+        def current_mysql_adapter
+          if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
+            ActiveRecord::ConnectionAdapters::Mysql2Adapter
+          else
+            raise "Could not find MySQL connection adapter"
+          end
+        end
+      end
+
+      ActiveRecordMysqlAdapter = Enum.current_mysql_adapter
+
       module MysqlAdapter
         def native_database_types #:nodoc
           types = super
@@ -75,10 +78,8 @@ module ActiveRecord
           end
         end
       end
+
+      ActiveRecordMysqlAdapter.prepend ActiveRecord::Mysql::Enum::MysqlAdapter
     end
   end
-end
-
-if adapter_class
-  adapter_class.prepend(ActiveRecord::Mysql::Enum::MysqlAdapter)
 end
