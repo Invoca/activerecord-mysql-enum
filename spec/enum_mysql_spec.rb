@@ -44,11 +44,22 @@ describe EnumerationTestModel do
     expect(row.errors['color']).to eq(['is not included in the list'])
   end
 
-  if Rails::VERSION::MAJOR < 5
-    it 'test_other_error_handling' do
-      allow(EnumerationTestModel).to receive(:columns_hash) { raise ActiveRecord::StatementInvalid, "invalid statement" }
-      expect { EnumerationTestModel.new }.to raise_error(ActiveRecord::StatementInvalid, "invalid statement" )
-    end
+  it 'test_42S02_error_handling' do
+    allow(ActiveRecord::Base).to receive(:columns_hash) { raise ActiveRecord::StatementInvalid, "invalid statement 42S02" }
+    expect do
+      class InvalidStatementModel < ActiveRecord::Base
+        validates_columns
+      end
+    end.not_to raise_error
+
+  end
+
+  it 'test_other_error_handling' do
+    expect do
+      class InvalidStatementModel < ActiveRecord::Base
+        validates_columns
+      end
+    end.to raise_error ActiveRecord::StatementInvalid, /Table 'activerecord_mysql_enum_test.invalid_statement_models' doesn't exist/
   end
 
   it 'test_other_types' do
