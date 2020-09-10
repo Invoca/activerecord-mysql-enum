@@ -45,6 +45,14 @@ describe ActiveRecord::Mysql::Enum::MysqlAdapter do
         sql_type = db_connection.type_to_sql('integer')
         expect(sql_type).to eq("int(11)")
       end
+
+      it "returns the native enum type if already set" do
+        sql_type = db_connection.type_to_sql('enum', [:a, :b, :c])
+        expect(sql_type).to eq(expected_enum_sql_type)
+
+        sql_type = db_connection.type_to_sql('enum', [:a, :b, :c])
+        expect(sql_type).to eq(expected_enum_sql_type)
+      end
     else
       it "supports enums" do
         sql_type = db_connection.type_to_sql('enum', limit: [:a, :b, :c])
@@ -54,6 +62,14 @@ describe ActiveRecord::Mysql::Enum::MysqlAdapter do
       it "calls super when not an enum" do
         sql_type = db_connection.type_to_sql('integer')
         expect(sql_type).to eq("int")
+      end
+
+      it "returns the native enum type if already set" do
+        sql_type = db_connection.type_to_sql('enum', limit: [:a, :b, :c])
+        expect(sql_type).to eq(expected_enum_sql_type)
+
+        sql_type = db_connection.type_to_sql('enum', limit: [:a, :b, :c])
+        expect(sql_type).to eq(expected_enum_sql_type)
       end
     end
   end
