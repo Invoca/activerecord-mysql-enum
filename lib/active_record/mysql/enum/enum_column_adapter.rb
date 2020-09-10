@@ -6,13 +6,20 @@
 module ActiveRecord
   module Mysql
     module Enum
-      ActiveRecordColumnWithEnums = if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
-                                      ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
-                                    elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
-                                      ActiveRecord::ConnectionAdapters::MySQL::Column
-                                    else
-                                      raise "could not find MySQL::Column or equivalent connection adapter"
-                                    end
+
+      class << self
+        def current_mysql_column_adapter
+          if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
+            ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
+          elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
+            ActiveRecord::ConnectionAdapters::MySQL::Column
+          else
+            raise "could not find MySQL::Column or equivalent connection adapter"
+          end
+        end
+      end
+
+      ActiveRecordColumnWithEnums = Enum.current_mysql_column_adapter
 
       module EnumColumnAdapter
         def initialize(*)
