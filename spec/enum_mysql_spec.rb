@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'fixtures/enumeration_test_model'
-# require 'fixtures/enum_test_controller'
 
 describe EnumerationTestModel do
   before :each do
@@ -45,6 +44,13 @@ describe EnumerationTestModel do
     expect(row.errors['color']).to eq(['is not included in the list'])
   end
 
+  if Rails::VERSION::MAJOR < 5
+    it 'test_other_error_handling' do
+      allow(EnumerationTestModel).to receive(:columns_hash) { raise ActiveRecord::StatementInvalid, "invalid statement" }
+      expect { EnumerationTestModel.new }.to raise_error(ActiveRecord::StatementInvalid, "invalid statement" )
+    end
+  end
+
   it 'test_other_types' do
     row = EnumerationTestModel.new
     row.string_field = 'a' * 10
@@ -66,23 +72,6 @@ describe EnumerationTestModel do
     row.int_field = '500'
     expect(row.save).to be true
   end
-
-  # it 'test_view_helper' do
-  #   request  = ActionController::TestRequest.new
-  #   response = ActionController::TestResponse.new
-  #   request.action = 'test1'
-  #   body = EnumTestController.process(request, response).body
-  #   expect(body).to eq('<select id="test_severity" name="test[severity]"><option value="low">low</option><option value="medium" selected="selected">medium</option><option value="high">high</option><option value="critical">critical</option></select>')
-  # end
-  #
-  # it 'test_radio_helper' do
-  #   request  = ActionController::TestRequest.new
-  #   response = ActionController::TestResponse.new
-  #   request.action = 'test2'
-  #   body = EnumTestController.process(request, response).body
-  #   expect(body).to eq('<label>low: <input id="test_severity_low" name="test[severity]" type="radio" value="low" /></label><label>medium: <input checked="checked" id="test_severity_medium" name="test[severity]" type="radio" value="medium" /></label><label>high: <input id="test_severity_high" name="test[severity]" type="radio" value="high" /></label><label>critical: <input id="test_severity_critical" name="test[severity]" type="radio" value="critical" /></label>')
-  # end
-
 
   # Basic tests
   it 'test_create_basic_default' do
@@ -152,8 +141,6 @@ describe EnumerationTestModel do
 		expect(object).to be_truthy
     expect(object.new_record?).to be true
   end
-
-
 
   # Nonnull
 
