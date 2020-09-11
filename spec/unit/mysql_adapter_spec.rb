@@ -33,44 +33,32 @@ describe ActiveRecord::Mysql::Enum::MysqlAdapter do
   end
 
   context "#type_to_sql" do
+    def version_safe_type_to_sql(type, limit)
+      if Rails::VERSION::MAJOR < 5
+        db_connection.type_to_sql(type, limit)
+      else
+        db_connection.type_to_sql(type, limit: limit)
+      end
+    end
+
     let(:expected_enum_sql_type) { "enum('a','b','c')" }
 
-    if Rails::VERSION::MAJOR < 5
-      it "supports enums" do
-        sql_type = db_connection.type_to_sql('enum', [:a, :b, :c])
-        expect(sql_type).to eq(expected_enum_sql_type)
-      end
+    it "supports enums" do
+      sql_type = version_safe_type_to_sql('enum', [:a, :b, :c])
+      expect(sql_type).to eq(expected_enum_sql_type)
+    end
 
-      it "calls super when not an enum" do
-        sql_type = db_connection.type_to_sql('integer')
-        expect(sql_type).to eq("int(11)")
-      end
+    it "calls super when not an enum" do
+      sql_type = version_safe_type_to_sql('integer', 1)
+      expect(sql_type).to eq("tinyint")
+    end
 
-      it "returns the native enum type if already set" do
-        sql_type = db_connection.type_to_sql('enum', [:a, :b, :c])
-        expect(sql_type).to eq(expected_enum_sql_type)
+    it "returns the native enum type if already set" do
+      sql_type = version_safe_type_to_sql('enum', [:a, :b, :c])
+      expect(sql_type).to eq(expected_enum_sql_type)
 
-        sql_type = db_connection.type_to_sql('enum', [:a, :b, :c])
-        expect(sql_type).to eq(expected_enum_sql_type)
-      end
-    else
-      it "supports enums" do
-        sql_type = db_connection.type_to_sql('enum', limit: [:a, :b, :c])
-        expect(sql_type).to eq(expected_enum_sql_type)
-      end
-
-      it "calls super when not an enum" do
-        sql_type = db_connection.type_to_sql('integer')
-        expect(sql_type).to eq("int")
-      end
-
-      it "returns the native enum type if already set" do
-        sql_type = db_connection.type_to_sql('enum', limit: [:a, :b, :c])
-        expect(sql_type).to eq(expected_enum_sql_type)
-
-        sql_type = db_connection.type_to_sql('enum', limit: [:a, :b, :c])
-        expect(sql_type).to eq(expected_enum_sql_type)
-      end
+      sql_type = version_safe_type_to_sql('enum', [:a, :b, :c])
+      expect(sql_type).to eq(expected_enum_sql_type)
     end
   end
 end
