@@ -17,7 +17,7 @@ describe ActiveRecord::Mysql::Enum::MysqlAdapter do
     end
 
     it "raises" do
-      expect { ActiveRecord::Mysql::Enum.current_mysql_adapter }.to raise_error(RuntimeError, "Could not find MySQL connection adapter")
+      expect { ActiveRecord::Mysql::Enum.mysql_adapter }.to raise_error(RuntimeError, "Could not find MySQL connection adapter")
     end
   end
 

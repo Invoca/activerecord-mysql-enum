@@ -21,7 +21,7 @@ describe ActiveRecord::Mysql::Enum::EnumColumnAdapter do
     end
 
     it "raises" do
-      expect { ActiveRecord::Mysql::Enum.current_mysql_column_adapter }.to raise_error(RuntimeError, "could not find MySQL::Column or equivalent connection adapter")
+      expect { ActiveRecord::Mysql::Enum.mysql_column_adapter }.to raise_error(RuntimeError, "could not find MySQL::Column or equivalent connection adapter")
     end
   end
 

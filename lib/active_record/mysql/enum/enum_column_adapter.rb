@@ -8,7 +8,7 @@ module ActiveRecord
     module Enum
 
       class << self
-        def current_mysql_column_adapter
+        def mysql_column_adapter
           if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
             ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column
           elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
@@ -19,7 +19,7 @@ module ActiveRecord
         end
       end
 
-      ActiveRecordColumnWithEnums = Enum.current_mysql_column_adapter
+      ActiveRecordColumnWithEnums = Enum.mysql_column_adapter
 
       module EnumColumnAdapter
         def initialize(*)

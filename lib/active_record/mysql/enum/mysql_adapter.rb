@@ -5,16 +5,14 @@ module ActiveRecord
     module Enum
 
       class << self
-        def current_mysql_adapter
-          if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
-            ActiveRecord::ConnectionAdapters::Mysql2Adapter
-          else
-            raise "Could not find MySQL connection adapter"
-          end
+        def mysql_adapter
+          defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter or raise "Could not find MySQL connection adapter"
+
+          ActiveRecord::ConnectionAdapters::Mysql2Adapter
         end
       end
 
-      ActiveRecordMysqlAdapter = Enum.current_mysql_adapter
+      ActiveRecordMysqlAdapter = Enum.mysql_adapter
 
       module MysqlAdapter
         def native_database_types #:nodoc
