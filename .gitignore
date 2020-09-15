@@ -11,3 +11,4 @@
 .idea
 gemfiles/*.lock
 coverage/
+spec/dummy/log/*.log
