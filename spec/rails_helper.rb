@@ -10,7 +10,9 @@ SimpleCov.start do
   add_filter 'spec/helpers'
 end
 
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path("../dummy/config/environment", __FILE__)
+Rails.application.config.root = "spec/dummy"
+
 require 'spec_helper'
 require 'rspec/rails'
 
@@ -39,7 +41,7 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = "#{::Rails.root}/../fixtures"
 
   # See database_cleaner.rb about config.use_transactional_fixtures
   # config.use_transactional_fixtures = true
