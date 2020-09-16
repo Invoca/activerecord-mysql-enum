@@ -1,4 +1,4 @@
-# ActiveRecord::Mysql::Enum
+# ActiveRecord::Mysql::Enum [![Coverage Status](https://coveralls.io/repos/github/Invoca/activerecord-mysql-enum/badge.svg?branch=master)](https://coveralls.io/github/Invoca/activerecord-mysql-enum?branch=master)
 
 This gem is an extension to ActiveRecord which enables native support of
 enumerations in the database schema using the ENUM type in MySQL. Forked
@@ -7,17 +7,15 @@ which was itself a fork of a fork of Nick Pohodnya's original gem for
 Rails 3, [enum_column3](https://github.com/electronick/enum_column).
 
 ## Support
-Currently this has been manually tested with Rails version 4 and 5, and works with scaffolding.
+Currently this is tested with Rails version 4.2, 5.2, and 6.0.
 
 **Supported adapters:**
-- mysql
 - mysql2
-- jdbcmysql (by Nilesh Trivedi)
 
 ## Installation
 In your `Gemfile` add the following snippet
 ```ruby
-gem 'activerecord-mysql-enum', '~> 0.1', require: 'active_record/mysql/enum'
+gem 'activerecord-mysql-enum', '~> 1.0', require: 'active_record/mysql/enum'
 ```
 
 ## Usage
@@ -49,18 +47,4 @@ irb(1)> Enumeration.columns_hash['color'].limit
 => [:red, :blue, :green, :yellow]
 irb(2)> @enumeration.column_for_attribute(:color).limit
 => [:red, :blue, :green, :yellow]
-```
-
-### Form Helpers
-You can use enum_select helper to generate input for enumerated attribute as:
-```ruby
-<%= enum_select(@enumeration, 'severity')%>
-```
-
-Or using `form_for`:
-```ruby
-<%= form_for @enumeration do |f| %>
-  <%= f.label :severity %>
-  <%= f.enum_select :severity %>
-<% end %>
 ```

@@ -4,6 +4,23 @@ Inspired by [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - Unreleased
+### Added
+- A Rspec test suit
+- Dummy Rails app to be used by tests
+- Test coverage reports via Coveralls/SimpleCov
+- A coverage report badge to the README
+- Unit tests being run on push with TravisCI
+- Appraisal to test Rails 4.2, 5.2, and 6.0
+- A dependency on the mysql2 gem
+
+### Changed
+- Existing tests to be run with Rspec
+
+### Removed
+- Support for the mysql gem
+- Support for Rails < 4.2
+
 ## [0.1.4] - Unreleased
 ### Fixed
 - Fixed bug in `mysql_adapter` where optional arguments being passed to `type_to_sql` would cause
@@ -28,6 +45,7 @@ Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0
 ### Changed
 - Renamed the gem from `enum_column3` to `activerecord-mysql-enum`
 
+[1.0.0]: https://github.com/Invoca/activerecord-mysql-enum/compare/v0.1.4...v1.0.0
 [0.1.4]: https://github.com/Invoca/activerecord-mysql-enum/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/Invoca/activerecord-mysql-enum/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/Invoca/activerecord-mysql-enum/compare/v0.1.1...v0.1.2

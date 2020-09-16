@@ -6,3 +6,9 @@
 /pkg/
 /spec/reports/
 /tmp/
+/log/*.log
+/db/*.sqlite3
+.idea
+gemfiles/*.lock
+coverage/
+spec/dummy/log/*.log
