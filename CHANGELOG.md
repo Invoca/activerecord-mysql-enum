@@ -4,7 +4,7 @@ Inspired by [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - Unreleased
+## [1.0.0] - 2020-09-16
 ### Added
 - A Rspec test suit
 - Dummy Rails app to be used by tests
@@ -21,7 +21,7 @@ Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0
 - Support for the mysql gem
 - Support for Rails < 4.2
 
-## [0.1.4] - Unreleased
+## [0.1.4] - 2020-08-20
 ### Fixed
 - Fixed bug in `mysql_adapter` where optional arguments being passed to `type_to_sql` would cause
   an unexpected error
