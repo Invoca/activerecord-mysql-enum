@@ -3,7 +3,7 @@ PATH
   specs:
     activerecord-mysql-enum (1.0.0)
       activerecord (>= 4.2, < 7)
-      mysql2 (= 0.4.5)
+      mysql2 (~> 0.4.5)
 
 GEM
   remote: https://rubygems.org/
