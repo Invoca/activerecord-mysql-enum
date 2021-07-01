@@ -10,5 +10,6 @@ gem "rake", "~> 13.0"
 gem "rails", "~> 4.2"
 gem "rspec"
 gem "rspec-rails", "~> 3.0"
+gem "mysql2", "~> 0.4"
 
 gemspec path: "../"
