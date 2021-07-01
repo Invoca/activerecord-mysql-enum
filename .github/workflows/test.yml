@@ -1,0 +1,46 @@
+---
+name: ActiveRecord MySQL Enum
+on: [push]
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: activerecord_mysql_enum_test
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: rootpassword
+        ports:
+        - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: [2.5.8, 2.6.5, 2.7.1]
+        gemfile:
+        - gemfiles/rails_4.gemfile
+        - gemfiles/rails_5.gemfile
+        - gemfiles/rails_6.gemfile
+        include:
+        - ruby: 2.4
+          gemfile: gemfiles/rails_4.gemfile
+        exclude:
+        - ruby: 2.7.1
+          gemfile: gemfiles/rails_4.gemfile
+    env:
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      DATABASE_MYSQL_HOST: 127.0.0.1
+      DATABASE_MYSQL_USERNAME: user
+      DATABASE_MYSQL_PASSWORD: password
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler: 1.17.3
+        bundler-cache: true
+    - run: RAILS_ENV=test bundle exec rake db:create
+    - run: bundle exec rspec
