@@ -21,15 +21,8 @@ jobs:
       matrix:
         ruby: [2.5.8, 2.6.5, 2.7.1]
         gemfile:
-        - gemfiles/rails_4.gemfile
         - gemfiles/rails_5.gemfile
         - gemfiles/rails_6.gemfile
-        include:
-        - ruby: 2.4
-          gemfile: gemfiles/rails_4.gemfile
-        exclude:
-        - ruby: 2.7.1
-          gemfile: gemfiles/rails_4.gemfile
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       DATABASE_MYSQL_HOST: 127.0.0.1

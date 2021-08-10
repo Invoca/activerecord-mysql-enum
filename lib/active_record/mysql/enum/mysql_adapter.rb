@@ -28,39 +28,20 @@ module ActiveRecord
         # be done on a per adapter basis, but is generalized here.
         #
         # will generate enum('a', 'b', 'c') for :limit => [:a, :b, :c]
-        if Rails::VERSION::MAJOR < 5
-          def type_to_sql(type, limit = nil, *args)
-            if type.to_s == 'enum'
-              column_type_sql =
-                if (native_database_type = native_database_types[type])
-                  native_database_type[:name]
-                else
-                  'enum'
-                end
+        def type_to_sql(type, limit: nil, **_options) # :nodoc:
+          if type.to_s == 'enum'
+            column_type_sql =
+              if (native_database_type = native_database_types[type])
+                native_database_type[:name]
+              else
+                'enum'
+              end
 
-              quoted_values = limit.map { |v| quote(v) }.join(',')
+            quoted_values = limit.map { |v| quote(v) }.join(',')
 
-              "#{column_type_sql}(#{quoted_values})"
-            else
-              super
-            end
-          end
-        else
-          def type_to_sql(type, limit: nil, **_options) # :nodoc:
-            if type.to_s == 'enum'
-              column_type_sql =
-                if (native_database_type = native_database_types[type])
-                  native_database_type[:name]
-                else
-                  'enum'
-                end
-
-              quoted_values = limit.map { |v| quote(v) }.join(',')
-
-              "#{column_type_sql}(#{quoted_values})"
-            else
-              super
-            end
+            "#{column_type_sql}(#{quoted_values})"
+          else
+            super
           end
         end
 

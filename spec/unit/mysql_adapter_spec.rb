@@ -34,11 +34,7 @@ describe ActiveRecord::Mysql::Enum::MysqlAdapter do
 
   context "#type_to_sql" do
     def version_safe_type_to_sql(type, limit)
-      if Rails::VERSION::MAJOR < 5
-        db_connection.type_to_sql(type, limit)
-      else
-        db_connection.type_to_sql(type, limit: limit)
-      end
+      db_connection.type_to_sql(type, limit: limit)
     end
 
     let(:expected_enum_sql_type) { "enum('a','b','c')" }

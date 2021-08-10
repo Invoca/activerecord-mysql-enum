@@ -10,6 +10,6 @@ gem 'coveralls', require: false
 gem 'pry'
 gem 'pry-byebug'
 gem 'rake',        '~> 13.0'
-gem 'rails',       '~> 4.2'
+gem 'rails',       '~> 5.2'
 gem 'rspec'
 gem 'rspec-rails', '~> 3.0'
