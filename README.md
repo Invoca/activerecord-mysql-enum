@@ -7,7 +7,7 @@ which was itself a fork of a fork of Nick Pohodnya's original gem for
 Rails 3, [enum_column3](https://github.com/electronick/enum_column).
 
 ## Support
-Currently this is tested with Rails version 5.2, and 6.0.
+Currently this is tested with Rails version 5.2, 6.0, and 6.1.
 
 **Supported adapters:**
 - mysql2

@@ -16,7 +16,7 @@ describe EnumerationTestModel do
     severity_column = columns['severity']
     expect(severity_column).not_to be_nil
     expect(severity_column.limit).to eq([:low, :medium, :high, :critical])
-    expect(severity_column.default).to eq(:medium)
+    expect(severity_column.default).to eq("medium")
   end
 
   it 'test_insert_enum' do

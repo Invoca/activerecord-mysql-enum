@@ -28,7 +28,7 @@ describe ActiveRecord::Mysql::Enum::EnumColumnAdapter do
   let(:test_column) { ActiveRecord::Mysql::Enum::ActiveRecordColumnWithEnums.new("test column", "default", column_type) }
 
   context "as an Enum column" do
-    let(:column_type) { ActiveRecord::Type::Enum.new }
+    let(:column_type) { ActiveRecord::ConnectionAdapters::SqlTypeMetadata.new(sql_type: "enum('good', 'working')", type: :enum, limit: [:good, :working]) }
 
     it "creates a new Column" do
       expect(test_column).to be_a ActiveRecord::Mysql::Enum::ActiveRecordColumnWithEnums
@@ -36,7 +36,7 @@ describe ActiveRecord::Mysql::Enum::EnumColumnAdapter do
   end
 
   context "as a String column (calling super)" do
-    let(:column_type) { ActiveRecord::Type::String.new }
+    let(:column_type) { ActiveRecord::ConnectionAdapters::SqlTypeMetadata.new(sql_type: "varchar(255)", type: :string, limit: 255) }
 
     it "creates a new Column" do
       expect(test_column).to be_a ActiveRecord::Mysql::Enum::ActiveRecordColumnWithEnums
