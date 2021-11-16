@@ -22,16 +22,6 @@ module ActiveRecord
       ActiveRecordColumnWithEnums = Enum.mysql_column_adapter
 
       module EnumColumnAdapter
-        def initialize(*args, **kwargs, &block)
-          super
-
-          if type == :enum
-            @default = if @default.present?
-                         @default.to_sym
-                       end
-          end
-        end
-
         # Convert to a symbol.
         def type_cast_from_database(value)
           if type == :enum
