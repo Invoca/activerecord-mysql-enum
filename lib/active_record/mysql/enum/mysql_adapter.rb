@@ -45,20 +45,30 @@ module ActiveRecord
           end
         end
 
+        if Gem::Version.new(Rails.version.to_f.to_s) < Gem::Version.new('7.0')
+          private
 
-        private
+          def initialize_type_map(m = type_map)
+            super
 
-        def initialize_type_map(m = type_map)
-          super
+            m.register_type(/enum/i) do |sql_type|
+              limit = sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.to_sym }
+              ActiveRecord::Type::Enum.new(limit: limit)
+            end
+          end
+        end
+      end
 
+      ActiveRecordMysqlAdapter.prepend ActiveRecord::Mysql::Enum::MysqlAdapter
+
+      unless Gem::Version.new(Rails.version.to_f.to_s) < Gem::Version.new('7.0')
+        [ActiveRecordMysqlAdapter::TYPE_MAP, ActiveRecordMysqlAdapter::TYPE_MAP_WITH_BOOLEAN].each do |m|
           m.register_type(/enum/i) do |sql_type|
             limit = sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.to_sym }
             ActiveRecord::Type::Enum.new(limit: limit)
           end
         end
       end
-
-      ActiveRecordMysqlAdapter.prepend ActiveRecord::Mysql::Enum::MysqlAdapter
     end
   end
 end
