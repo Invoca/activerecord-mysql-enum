@@ -22,7 +22,7 @@ module ActiveRecord
       ActiveRecordColumnWithEnums = Enum.mysql_column_adapter
 
       module EnumColumnAdapter
-        def initialize(*)
+        def initialize(*args, **kwargs, &block)
           super
 
           if type == :enum
