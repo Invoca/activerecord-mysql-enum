@@ -2,8 +2,8 @@
 name: ActiveRecord MySQL Enum
 on: [push]
 jobs:
-  test:
-    name: Unit Tests
+  test-ruby-2:
+    name: Ruby 2 Unit Tests
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -19,12 +19,47 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [2.5.8, 2.6.5, 2.7.1, '3.0', 3.1]
+        ruby: [2.5.8, 2.6.5, 2.7]
         gemfile:
         - gemfiles/rails_5.gemfile
         - gemfiles/rails_6.gemfile
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      DATABASE_MYSQL_HOST: 127.0.0.1
+      DATABASE_MYSQL_USERNAME: user
+      DATABASE_MYSQL_PASSWORD: password
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler: 2.2.29
+        bundler-cache: true
+    - run: RAILS_ENV=test bundle exec rake db:create
+    - run: bundle exec rspec
+
+  test-ruby-3:
+    name: Ruby 3 Unit Tests
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: activerecord_mysql_enum_test
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: rootpassword
+        ports:
+        - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['3.0', 3.1]
+        gemfile:
+        - gemfiles/rails_6.gemfile
+    env:
+      BUNDLE_GEMFILE: gemfiles/rails_6.gemfile
       DATABASE_MYSQL_HOST: 127.0.0.1
       DATABASE_MYSQL_USERNAME: user
       DATABASE_MYSQL_PASSWORD: password
