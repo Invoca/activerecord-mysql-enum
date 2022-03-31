@@ -4,10 +4,6 @@ Inspired by [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.1] - Unreleased
-- Upgraded to Ruby 2.7 and Bundler 2.
-- Added support for Ruby 3.0 and 3.1.
-
 ## [2.0.0] - 2021-08-10
 ### Removed
 - Dropped support for Rails less than 5
