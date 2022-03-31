@@ -26,17 +26,13 @@ jobs:
         - gemfiles/rails_6.gemfile
         exclude:
         - ruby: '3.0'
-          gemfile:
-          - Gemfile
+          gemfile: Gemfile
         - ruby: 3.1
-          gemfile:
-          - Gemfile
+          gemfile: Gemfile
         - ruby: '3.0'
-          gemfile:
-          - gemfiles/rails_5.gemfile
+          gemfile: gemfiles/rails_5.gemfile
         - ruby: 3.1
-          gemfile:
-          - gemfiles/rails_5.gemfile
+          gemfile: gemfiles/rails_5.gemfile
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       DATABASE_MYSQL_HOST: 127.0.0.1
