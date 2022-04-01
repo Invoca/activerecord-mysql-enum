@@ -1,19 +1,21 @@
-default: &default
+development:
   encoding: utf8
   username: <%= ENV['DATABASE_MYSQL_USERNAME'] || 'root' %>
   password: <%= ENV['DATABASE_MYSQL_PASSWORD'] || '' %>
   adapter: mysql2
   pool: 5
   timeout: 5000
-
-development:
-  <<: *default
   database: activerecord_mysql_enum_dev
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
+  encoding: utf8
+  username: <%= ENV['DATABASE_MYSQL_USERNAME'] || 'root' %>
+  password: <%= ENV['DATABASE_MYSQL_PASSWORD'] || '' %>
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
   database: activerecord_mysql_enum_test
   host: <%= ENV['DATABASE_MYSQL_HOST'] || 'localhost' %>
