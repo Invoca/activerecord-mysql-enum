@@ -2,7 +2,7 @@
 name: ActiveRecord MySQL Enum
 on: [push]
 jobs:
-  test-ruby:
+  test:
     name: Unit Tests
     runs-on: ubuntu-latest
     services:
