@@ -32,6 +32,20 @@ describe EnumerationTestModel do
     expect(row.severity).to eq(:medium)
   end
 
+  it 'test_coercions' do
+    row = EnumerationTestModel.new
+    row.color = "blue"
+    row.string_field = 'test'
+    expect(row.color).to eq(:blue)
+    expect(row.severity).to eq(:medium)
+    expect(row.save).to be true
+
+    db_row = EnumerationTestModel.find(row.id)
+    expect(db_row).not_to be_nil
+    expect(db_row.color).to eq(:blue)
+    expect(db_row.severity).to eq(:medium)
+  end
+
   # Uses the automatic validates_columns to create automatic validation rules
   # for columns based on the schema information.
   it 'test_bad_value' do
