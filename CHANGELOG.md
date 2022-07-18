@@ -4,6 +4,10 @@ Inspired by [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2022-07-18
+### Added
+- Added support for Rails 6.1 and 7.0
+
 ## [2.1.0] - 2022-04-11
 ### Added
 - Added ruby 3 support
@@ -56,6 +60,7 @@ Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0
 ### Changed
 - Renamed the gem from `enum_column3` to `activerecord-mysql-enum`
 
+[2.2.0]: https://github.com/Invoca/activerecord-mysql-enum/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/Invoca/activerecord-mysql-enum/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Invoca/activerecord-mysql-enum/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/Invoca/activerecord-mysql-enum/compare/v0.1.4...v1.0.0
