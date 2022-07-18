@@ -10,6 +10,13 @@ module ActiveRecord
 
           ActiveRecord::ConnectionAdapters::Mysql2Adapter
         end
+
+        def register_enum_with_type_mapping(m)
+          m.register_type(/enum/i) do |sql_type|
+            limit = sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.to_sym }
+            ActiveRecord::Type::Enum.new(limit: limit)
+          end
+        end
       end
 
       ActiveRecordMysqlAdapter = Enum.mysql_adapter
@@ -51,10 +58,7 @@ module ActiveRecord
           def initialize_type_map(m = type_map)
             super
 
-            m.register_type(/enum/i) do |sql_type|
-              limit = sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.to_sym }
-              ActiveRecord::Type::Enum.new(limit: limit)
-            end
+            Enum.register_enum_with_type_mapping(m)
           end
         end
       end
@@ -63,10 +67,7 @@ module ActiveRecord
 
       unless Gem::Version.new(Rails.version) < Gem::Version.new('7.0')
         [ActiveRecordMysqlAdapter::TYPE_MAP, ActiveRecordMysqlAdapter::TYPE_MAP_WITH_BOOLEAN].each do |m|
-          m.register_type(/enum/i) do |sql_type|
-            limit = sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.to_sym }
-            ActiveRecord::Type::Enum.new(limit: limit)
-          end
+          Enum.register_enum_with_type_mapping(m)
         end
       end
     end
