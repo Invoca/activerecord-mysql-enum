@@ -16,3 +16,9 @@ appraise 'rails-6-1' do
   gem 'mysql2', '~> 0.5'
   gem "net-smtp", require: false
 end
+
+appraise 'rails-7-0' do
+  gem 'rails', '~> 7.0.0'
+  gem 'mysql2', '~> 0.5'
+  gem "net-smtp", require: false
+end
