@@ -21,8 +21,9 @@ gem 'activerecord-mysql-enum', '~> 1.0', require: 'active_record/mysql/enum'
 ### Non-Rails Application
 In order to initialize the extension in non-Rails applications, you must add the following line
 to your application's bootstrapping code after ActiveRecord has been initialized.
+
 ```ruby
-ActiveRecord::Mysql::Enum.non_rails_initialize!
+ActiveRecord::Mysql::Enum.initialize!
 ```
 
 ## Usage

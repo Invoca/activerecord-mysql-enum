@@ -4,7 +4,7 @@ module ActiveRecord
   module Mysql
     module Enum
       class << self
-        def non_rails_initialize!
+        def initialize!
           require 'active_record/mysql/enum/mysql_adapter'
           require 'active_record/mysql/enum/enum_type'
           require 'active_record/mysql/enum/enum_column_adapter'
@@ -18,7 +18,7 @@ module ActiveRecord
         class Railtie < Rails::Railtie
           initializer 'active_record-mysql-enum.initialize', :after => 'active_record.initialize_database' do |app|
             ActiveSupport.on_load :active_record do
-              ActiveRecord::Mysql::Enum.non_rails_initialize!
+              ActiveRecord::Mysql::Enum.initialize!
             end
           end
         end
