@@ -5,7 +5,7 @@ describe ActiveRecord::ConnectionAdapters::TableDefinition do
 
     let(:column_name) { "enum_column_test" }
     let(:test_table_definition) do
-      if Rails::VERSION::MAJOR < 6
+      if ActiveRecord::VERSION::MAJOR < 6
         ActiveRecord::ConnectionAdapters::TableDefinition.new("test_table")
       else
         ActiveRecord::ConnectionAdapters::TableDefinition.new(ActiveRecord::Base.connection, "test_table")
