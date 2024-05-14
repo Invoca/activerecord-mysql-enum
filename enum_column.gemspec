@@ -28,6 +28,8 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'activerecord', '>= 5.2', '< 7.1'
-  spec.add_dependency 'mysql2', '>= 0.4.5', '< 0.6'
+  spec.required_ruby_version = ">= 3.0"
+
+  spec.add_dependency 'activerecord', '>= 5.2'
+  spec.add_dependency 'mysql2',       '>= 0.4.5'
 end

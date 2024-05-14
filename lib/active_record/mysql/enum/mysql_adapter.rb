@@ -3,7 +3,6 @@
 module ActiveRecord
   module Mysql
     module Enum
-
       class << self
         def mysql_adapter
           defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter or raise "Could not find MySQL connection adapter"
@@ -52,7 +51,7 @@ module ActiveRecord
           end
         end
 
-        if Gem::Version.new(ActiveRecord.version) < Gem::Version.new('7.0')
+        if ActiveRecord.version < Gem::Version.new('7.0')
           private
 
           def initialize_type_map(m = type_map)
@@ -65,10 +64,9 @@ module ActiveRecord
 
       ActiveRecordMysqlAdapter.prepend ActiveRecord::Mysql::Enum::MysqlAdapter
 
-      unless Gem::Version.new(ActiveRecord.version) < Gem::Version.new('7.0')
-        [ActiveRecordMysqlAdapter::TYPE_MAP, ActiveRecordMysqlAdapter::TYPE_MAP_WITH_BOOLEAN].each do |m|
-          Enum.register_enum_with_type_mapping(m)
-        end
+      if ActiveRecord.version >= Gem::Version.new('7.0')
+        Enum.register_enum_with_type_mapping(ActiveRecordMysqlAdapter::TYPE_MAP)
+        Enum.register_enum_with_type_mapping(ActiveRecordMysqlAdapter::TYPE_MAP_WITH_BOOLEAN) if ActiveRecord.version < Gem::Version.new('7.1')
       end
     end
   end
