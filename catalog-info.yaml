@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: activerecord-mysql-enum
+  annotations:
+    github.com/project-slug: Invoca/activerecord-mysql-enum
+spec:
+  type: other
+  lifecycle: unknown
+  owner: octothorpe
