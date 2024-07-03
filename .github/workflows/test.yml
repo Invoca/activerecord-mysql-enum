@@ -38,5 +38,5 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
         bundler: 2.2.29
         bundler-cache: true
-    - run: RAILS_ENV=test bundle exec rake db:create
+    - run: RAILS_ENV=test bundle exec rake db:create db:migrate
     - run: bundle exec rspec
