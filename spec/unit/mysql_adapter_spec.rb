@@ -33,6 +33,25 @@ describe ActiveRecord::Mysql::Enum::MysqlAdapter do
   end
 
   context "#type_to_sql" do
+    subject(:type_to_sql) { db_connection.type_to_sql(type, limit: limit) }
+    let(:type) { "enum" }
+    let(:limit) { [:a, :b, :c] }
+
+    it { is_expected.to eq("enum('a','b','c')") }
+
+    context "when enum is passed as a symbol" do
+      let(:type) { :enum }
+
+      it { is_expected.to eq("enum('a','b','c')") }
+    end
+
+    context "calls super when not an enum" do
+      let(:type) { "integer" }
+      let(:limit) { 1 }
+
+      it { is_expected.to eq("tinyint") }
+    end
+
     def version_safe_type_to_sql(type, limit)
       db_connection.type_to_sql(type, limit: limit)
     end
