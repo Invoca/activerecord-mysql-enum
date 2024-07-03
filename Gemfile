@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'appraisal'
+gem 'appraisal-matrix'
 gem 'coveralls', require: false
 gem 'pry'
 gem 'pry-byebug'
