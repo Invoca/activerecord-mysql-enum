@@ -5,8 +5,8 @@ Inspired by [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Note: this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.4.2] - 2024-07-31
-### Fixed
-- Fixed bug in enum quoting to use the same connection.
+### Removed
+- Removed unnecessary patching of ActiveRecord::ConnectionAdapters::Quoting module
 
 ## [2.4.1] - 2024-07-03
 ### Fixed
