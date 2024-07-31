@@ -9,7 +9,6 @@ module ActiveRecord
           require 'active_record/mysql/enum/enum_type'
           require 'active_record/mysql/enum/enum_column_adapter'
           require 'active_record/mysql/enum/schema_definitions'
-          require 'active_record/mysql/enum/quoting'
           require 'active_record/mysql/enum/validations'
         end
       end
