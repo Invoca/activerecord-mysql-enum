@@ -8,10 +8,10 @@ module ActiveRecord
       # Quote a symbol as a normal string. This will support quoting of
       # enumerated values.
       def quote(value)
-        if !value.is_a? Symbol
-          __quote_enum(value)
+        if value.is_a? Symbol
+          __quote_enum(value.to_s)
         else
-          ActiveRecord::Base.send(:quote_bound_value, value.to_s)
+          __quote_enum(value)
         end
       end
     end
