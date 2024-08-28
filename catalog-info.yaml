@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: activerecord-mysql-enum
+  name: activerecord-mysql-enum-gem
   title: ActiveRecord Mysql Enum gem
   annotations:
     github.com/project-slug: Invoca/activerecord-mysql-enum
