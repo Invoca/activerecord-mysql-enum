@@ -15,7 +15,7 @@ Currently this is tested with ActiveRecord version 5.2, 6.0, 6.1, and 7.0.
 ## Installation
 In your `Gemfile` add the following snippet
 ```ruby
-gem 'activerecord-mysql-enum', '~> 1.0', require: 'active_record/mysql/enum'
+gem 'activerecord-mysql-enum', '~> 2.0', require: 'active_record/mysql/enum'
 ```
 
 ### Non-Rails Application
