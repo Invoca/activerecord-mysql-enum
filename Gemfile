@@ -14,3 +14,7 @@ gem 'rake'
 gem 'rails'
 gem 'rspec'
 gem 'rspec-rails'
+
+gem "base64", "~> 0.2.0"
+gem "bigdecimal", "~> 3.1"
+gem "mutex_m", "~> 0.3.0"
