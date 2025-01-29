@@ -252,7 +252,11 @@ DEPENDENCIES
   activerecord-mysql-enum!
   appraisal
   appraisal-matrix
+  base64 (>= 0.2.0)
+  bigdecimal (>= 3.1)
+  concurrent-ruby (~> 1.3, < 1.3.5)
   coveralls
+  mutex_m (>= 0.3.0)
   pry
   pry-byebug
   rails
